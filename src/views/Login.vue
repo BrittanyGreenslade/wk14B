@@ -2,22 +2,22 @@
   <div>
     <h1>Rock, Paper, Scissors!</h1>
     <h2>Please login to play:</h2>
-    <form action="javascript:void(0)">
-      <input type="text" name="email" id="emailInput" placeholder="Email" />
-      <input
-        type="password"
-        name="password"
-        id="passwordInput"
-        placeholder="Password"
-      />
-      <input type="button" id="loginBtn" value="Login" />
-    </form>
+    <br />
+    <p>
+      (This site uses an API for a fake login - please use the email
+      <b>eve.holt@reqres.in</b> to login. The password can be anything you
+      choose)
+    </p>
+    <br />
+    <login-form />
   </div>
 </template>
 
 <script>
+import LoginForm from "../components/LoginForm.vue";
 export default {
   name: "login",
+  components: { LoginForm },
 };
 </script>
 

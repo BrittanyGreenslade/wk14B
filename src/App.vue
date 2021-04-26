@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/login">Login</router-link> |
-
+      <router-link to="/login">Login</router-link>
+      |
       <router-link to="/game">Game</router-link>
     </div>
     <router-view />
@@ -10,6 +10,10 @@
 </template>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
