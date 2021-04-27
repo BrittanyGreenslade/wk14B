@@ -30,10 +30,19 @@ export default {
   },
   mounted() {
     if (this.loginToken) {
-      this.$router.replace("game");
+      this.navigateToGame();
     }
   },
+
   methods: {
+    navigateToGame() {
+      this.$router.push({ name: "Game" });
+      // this.window.open("../views/Game.vue");
+    },
+    // navigateToHome() {
+    //   this.$router.push({ name: "Login" });
+    // },
+
     attemptLogin() {
       this.loginStatus = "Logging in...";
       axios
@@ -47,9 +56,11 @@ export default {
           },
         })
         .then((res) => {
-          this.loginStatus = "You have logged in!";
+          setTimeout(this.navigateToGame, 1500);
+          this.loginStatus = "You have logged in! Redirecting..";
           let updatedLoginToken = cookies.set("loginToken", res.data.token);
           this.loginToken = updatedLoginToken;
+          // setTimeout(this.navigate, 2000);
         })
         .catch((err) => {
           console.log(err);

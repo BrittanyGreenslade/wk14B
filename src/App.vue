@@ -3,12 +3,34 @@
     <div id="nav">
       <router-link to="/login">Login</router-link>
       |
-      <router-link to="/game">Game</router-link>
+      <router-link @click="requestReroute" id="redirectGame" to="/game"
+        >Game</router-link
+      >
     </div>
+    <h1>Rock, Paper, Scissors!</h1>
+    <h2>Please login to play</h2>
+    <br />
+    <div id="alertMessage"></div>
     <router-view />
   </div>
 </template>
+<script>
+export default {
+  name: "App",
+  computed: {
+    loginToken() {
+      return this.$store.state.loginToken;
+    },
+  },
+  // methods: {
+  //   requestReroute() {
+  //     if (this.loginToken === null) {
 
+  //     }
+  //   },
+  // },
+};
+</script>
 <style>
 * {
   margin: 0;
