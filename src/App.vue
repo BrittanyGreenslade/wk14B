@@ -3,18 +3,26 @@
     <div id="nav">
       <router-link to="/login">Login</router-link>
       |
-      <router-link @click="requestReroute" id="redirectGame" to="/game"
+      <!-- if you add an event to a non-native HTMtag, you must use .native for it -->
+      <router-link @click.native.stop="notifyLogin" to="/game"
         >Game</router-link
       >
+      <span v-if="this.loginToken">
+        |
+        <router-link @click.native="logout" to="/login">Logout</router-link>
+      </span>
     </div>
-    <h1>Rock, Paper, Scissors!</h1>
-    <h2>Please login to play</h2>
-    <br />
     <div id="alertMessage"></div>
+    <br /><br />
+    <h1>Rock, Paper, Scissors!</h1>
+
+    <br />
+
     <router-view />
   </div>
 </template>
 <script>
+import cookies from "vue-cookies";
 export default {
   name: "App",
   computed: {
@@ -22,13 +30,24 @@ export default {
       return this.$store.state.loginToken;
     },
   },
-  // methods: {
-  //   requestReroute() {
-  //     if (this.loginToken === null) {
-
-  //     }
-  //   },
-  // },
+  methods: {
+    logout() {
+      cookies.remove("loginToken");
+      this.$store.commit("setLoginToken", undefined);
+      console.log(this.loginToken);
+    },
+    navigateToHome() {
+      this.$router.push({ name: "Login" });
+    },
+    notifyLogin() {
+      if (!this.loginToken) {
+        this.navigateToHome();
+        document.getElementById(
+          "alertMessage"
+        ).innerHTML = `<h3>Please login to play</h3>`;
+      }
+    },
+  },
 };
 </script>
 <style>
@@ -45,6 +64,7 @@ export default {
 }
 
 #nav {
+  width: 100%;
   padding: 30px;
 }
 

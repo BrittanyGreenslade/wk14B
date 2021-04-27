@@ -25,6 +25,17 @@ export default {
       return this.$store.state.gameWinner;
     },
   },
+  // mounted() {
+  //   if (!this.loginToken) {
+  //     this.navigateToHome();
+  //     document.getElementById("");
+  //   }
+  // },
+  methods: {
+    navigateToHome() {
+      this.$router.push({ name: "Login" });
+    },
+  },
 };
 </script>
 

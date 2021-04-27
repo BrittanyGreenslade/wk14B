@@ -3,10 +3,12 @@ import Vuex from "vuex";
 import rockOn from "../../public/images/rockOn.svg";
 import scissors from "../../public/images/scissors.svg";
 import paper from "../../public/images/paper.svg";
+// import cookies from "vue-cookies";
 
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
+    loginToken: "",
     cpuSelection: "",
     userSelection: "",
     gameWinner: "",
@@ -37,9 +39,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    // setLoginToken(state, data) {
-    //   state.loginToken = data;
-    // },
+    setLoginToken(state, data) {
+      state.loginToken = data;
+    },
     updateCpuSelection(state, data) {
       state.cpuSelection = data;
     },
@@ -60,5 +62,9 @@ export default new Vuex.Store({
     },
   },
   actions: {},
-  modules: {},
+  getters: {
+    //     sendLoginToken(state){
+    // return state.loginToken
+    //     }
+  },
 });

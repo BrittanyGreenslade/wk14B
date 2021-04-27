@@ -22,27 +22,33 @@ import axios from "axios";
 
 export default {
   name: "login-form",
+  computed: {
+    loginToken() {
+      return this.$store.state.loginToken;
+    },
+  },
   data() {
     return {
       loginStatus: "",
-      loginToken: cookies.get("loginToken"),
     };
   },
-  mounted() {
-    if (this.loginToken) {
-      this.navigateToGame();
-    }
-  },
+  // mounted() {
+  //   if (this.loginToken) {
+  //     this.navigateToGame();
+  //   }
+  // },
 
   methods: {
     navigateToGame() {
       this.$router.push({ name: "Game" });
-      // this.window.open("../views/Game.vue");
     },
     // navigateToHome() {
     //   this.$router.push({ name: "Login" });
     // },
-
+    updateLoginToken() {
+      let updatedLoginToken = cookies.get("loginToken");
+      this.$store.commit("setLoginToken", updatedLoginToken);
+    },
     attemptLogin() {
       this.loginStatus = "Logging in...";
       axios
@@ -58,9 +64,11 @@ export default {
         .then((res) => {
           setTimeout(this.navigateToGame, 1500);
           this.loginStatus = "You have logged in! Redirecting..";
-          let updatedLoginToken = cookies.set("loginToken", res.data.token);
-          this.loginToken = updatedLoginToken;
-          // setTimeout(this.navigate, 2000);
+          cookies.set("loginToken", res.data.token);
+          this.updateLoginToken();
+          // console.log(this.loginToken);
+          // let updatedLoginToken = cookies.get("loginToken");
+          // this.$store.commit("setLoginToken", cookies.get("loginToken"));
         })
         .catch((err) => {
           console.log(err);
