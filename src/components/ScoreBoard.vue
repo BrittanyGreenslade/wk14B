@@ -6,6 +6,7 @@
         <div class="scoreGridContainer">
           <div class="scoreRow">
             <h4>Wins</h4>
+            <!-- these things updated when state is updated -->
             <p class="winAmt">{{ userWin }}</p>
           </div>
           <div class="scoreRow">
@@ -26,12 +27,12 @@
 export default {
   name: "score-board",
   computed: {
-    userSelection() {
-      return this.$store.state.userSelection;
-    },
-    cpuSelection() {
-      return this.$store.state.cpuSelection;
-    },
+    // userSelection() {
+    //   return this.$store.state.userSelection;
+    // },
+    // cpuSelection() {
+    //   return this.$store.state.cpuSelection;
+    // },
     userWin() {
       return this.$store.state.userWin;
     },
@@ -51,7 +52,6 @@ export default {
 }
 h3 {
   text-decoration: underline;
-  /* margin-bottom: 20px; */
 }
 
 #scoreboardContainer {
@@ -63,7 +63,7 @@ h3 {
 .scoreGridContainer {
   height: 100%;
   display: grid;
-  /* border: 1px solid black; */
+
   width: 300px;
 }
 .scoreRow {

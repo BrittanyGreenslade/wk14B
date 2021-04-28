@@ -3,9 +3,9 @@ import Vuex from "vuex";
 import rockOn from "../../public/images/rockOn.svg";
 import scissors from "../../public/images/scissors.svg";
 import paper from "../../public/images/paper.svg";
-// import cookies from "vue-cookies";
 
 Vue.use(Vuex);
+//stroring all my variables for access in diff views/components
 export default new Vuex.Store({
   state: {
     loginToken: "",
@@ -16,6 +16,9 @@ export default new Vuex.Store({
     userLoss: 0,
     userWin: 0,
     tieGame: 0,
+    //the array of different selections. src so I can bind it to am image tag in cpu
+    //selection because I had to inject an img tag into the html when a selection was made
+    //I didn't do an alt.......sry
     selections: [
       {
         name: "rock",
@@ -37,7 +40,7 @@ export default new Vuex.Store({
       },
     ],
   },
-
+  //all of the mutations fns that I call in other components to update the state
   mutations: {
     setLoginToken(state, data) {
       state.loginToken = data;
@@ -62,9 +65,5 @@ export default new Vuex.Store({
     },
   },
   actions: {},
-  getters: {
-    //     sendLoginToken(state){
-    // return state.loginToken
-    //     }
-  },
+  getters: {},
 });

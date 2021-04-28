@@ -1,6 +1,9 @@
 <template>
   <section>
     <div id="buttonsContainer">
+      <!-- sends user's selection from var selectionOptions as an argument
+      in userSelects -->
+      <!-- for loop makes button for all selections in selectionOptions -->
       <button
         v-for="selection in selectionOptions"
         :key="selection.name"
@@ -9,15 +12,7 @@
         {{ selection.name }}
       </button>
     </div>
-    <!-- <div>
-      <button id="rockBtn" @click="userSelects(selectRock.img)">
-        Rock
-      </button>
-      <button id="paperBtn" @click="userSelects(selectPaper.img)">Paper</button>
-      <button id="scissorsBtn" @click="userSelects(selectScissors.img)">
-        Scissors
-      </button>
-    </div> -->
+    <!-- img of user's selection is put here when chosen -->
     <div id="userSelectionContainer"></div>
   </section>
 </template>
@@ -25,6 +20,7 @@
 <script>
 export default {
   name: "user-selection",
+  //grabs all values in their current state from the store
   computed: {
     userSelection() {
       return this.$store.state.userSelection;
@@ -44,44 +40,59 @@ export default {
     tieGame() {
       return this.$store.state.tieGame;
     },
-    selectRock() {
-      return this.$store.state.selectRock;
-    },
-    selectPaper() {
-      return this.$store.state.selectPaper;
-    },
-    selectScissors() {
-      return this.$store.state.selectScissors;
-    },
+    // selectRock() {
+    //   return this.$store.state.selectRock;
+    // },
+    // selectPaper() {
+    //   return this.$store.state.selectPaper;
+    // },
+    // selectScissors() {
+    //   return this.$store.state.selectScissors;
+    // },
     selectionOptions() {
       return this.$store.state.selections;
     },
   },
   methods: {
+    //makes computer's selection random out of the total selection options based on 0-2
+    //in the array
     randomSelection() {
       let randomSelect = Math.floor(
         Math.random() * this.selectionOptions.length
       );
+      //random selection is equal to this.selectionOptions array at element [randomSelect]
+      //set above in math.random
       let randomSelection = this.selectionOptions[randomSelect];
+      //updates the CPU selection with random element
       this.$store.commit("updateCpuSelection", randomSelection);
     },
+    //selection comes from the button that is clicked at the top
     userSelects(selection) {
+      //updates the userSelecion with this selection
       this.$store.commit("updateUserSelection", selection);
+      //puts the image onto the userSelectionContainer from the selection object
       document.getElementById(
         "userSelectionContainer"
       ).innerHTML = `${this.userSelection.img}`;
+      //runds the CPU selection function
       this.randomSelection();
+      //decides game winner/loser/tie
       if (this.userSelection.name === this.cpuSelection.name) {
+        //if scores are the same, tie
         let usersTie = this.tieGame + 1;
         this.$store.commit("updateTieGame", usersTie);
         this.$store.commit("updateGameWinner", "It's a tie!");
       } else if (this.userSelection.name === this.cpuSelection.beats) {
-        console.log(this.userLoss);
+        //when "beats" is equal to "name", the selection with "beats"
+        //wins over the selection with "name"
         let userLoses = this.userLoss + 1;
+        //udpates loss part of scoreboard
         this.$store.commit("updateUserLoss", userLoses);
+        //updates game winner msg
         this.$store.commit("updateGameWinner", "Computer wins!");
       } else if (this.userSelection.beats === this.cpuSelection.name) {
-        console.log(this.userWin);
+        //when "beats" is equal to "name", the selection with "beats"
+        //wins over the selection with "name"
         let userWins = this.userWin + 1;
         this.$store.commit("updateUserWin", userWins);
         this.$store.commit("updateGameWinner", "You win!");

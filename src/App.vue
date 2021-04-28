@@ -3,10 +3,11 @@
     <div id="nav">
       <router-link to="/login">Login</router-link>
       |
-      <!-- if you add an event to a non-native HTMtag, you must use .native for it -->
+      <!-- if you add an event to a non-native HTMtag, must use .native for it -->
       <router-link @click.native.stop="notifyLogin" to="/game"
         >Game</router-link
       >
+      <!-- this logout link shows up only if user is logged in -->
       <span v-if="this.loginToken">
         |
         <router-link @click.native="logout" to="/login">Logout</router-link>
@@ -32,13 +33,17 @@ export default {
   },
   methods: {
     logout() {
+      //removes the cookie
       cookies.remove("loginToken");
-      this.$store.commit("setLoginToken", undefined);
-      console.log(this.loginToken);
+      //once removed, updates login token to be back to ""
+      this.$store.commit("setLoginToken", "");
     },
+    //goes back to homepage
     navigateToHome() {
       this.$router.push({ name: "Login" });
     },
+    //if user isn't logged in, notifies them they must login to play
+    //called when a user clicks 'game' but doesn't have a login token
     notifyLogin() {
       if (!this.loginToken) {
         this.navigateToHome();

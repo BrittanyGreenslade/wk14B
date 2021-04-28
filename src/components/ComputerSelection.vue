@@ -1,7 +1,9 @@
 <template>
   <section>
     <div id="cpuSelectionContainer">
-      <img :src="`${cpuSelection}`" alt="" />
+      <!-- this was the only way I could figure out how to put the src here when it updates -->
+      <!-- continuously -->
+      <img :src="`${cpuSelection}`" alt="computer's selection" />
     </div>
   </section>
 </template>
@@ -21,26 +23,14 @@ export default {
     },
   },
   methods: {
+    //I'm confused about how I'm able to access inside of this cpuSelection as an object??
+    //oh nvm I think it's because of my "randomSelection" function in userSelection which
+    //chooses one random selection out of the array and then sends it to cpuSelection in store
     displayCpuSelecton() {
       document.getElementById(
         "cpuSelectionContainer"
       ).innerHTML = `${this.cpuSelection.img}`;
     },
-    // udpateCpuSelection(selection) {
-    //   console.log(selection);
-    //   return this.$store.commit("updateCpuSelection", this.randomSelection);
-    // },
-    //     userSelects(selection) {
-    //    this.$store.commit("updateUserSelection", selection);
-    //   document.getElementById(
-    //     "userSelectionContainer"
-    //   ).innerHTML = `${this.userSelection}`;
-    //  },
-    // cpuSelects(selection) {
-    //   this.$store.commit("updateCpuSelection", this.randomSelection);
-    //   // this.cpuSelection = this.randomSelection;
-    //   // console.log(this.cpuSelection);
-    // },
   },
 };
 </script>
